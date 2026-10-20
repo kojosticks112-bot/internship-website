@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Movie Finder</title><style>
+body{font-family:Arial;margin:0;background:#111827;color:white}.wrap{max-width:1000px;margin:auto;padding:30px}.search{display:flex;gap:8px}.search input{flex:1;padding:14px;border-radius:10px;border:0}.search button{padding:14px 20px;border:0;border-radius:10px;background:#f59e0b;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;margin-top:25px}.movie{background:#1f2937;border-radius:14px;overflow:hidden}.movie img{width:100%;height:270px;object-fit:cover}.movie div{padding:12px}.note{color:#cbd5e1}.key{margin:12px 0;padding:10px;width:100%;max-width:450px}
+</style></head><body><div class="wrap"><h1>🎬 Movie Finder</h1>
+<p class="note">Add your free OMDb API key below, then search for movies.</p><input class="key" id="key" placeholder="OMDb API key">
+<div class="search"><input id="term" placeholder="Search a movie..." onkeydown="if(event.key==='Enter')searchMovies()"><button onclick="searchMovies()">Search</button></div>
+<p id="msg"></p><div id="results" class="grid"></div></div>
+<script>
+async function searchMovies(){const key=document.getElementById("key").value.trim(),term=document.getElementById("term").value.trim(),msg=document.getElementById("msg"),out=document.getElementById("results");
+if(!key||!term){msg.textContent="Enter both an API key and movie title.";return}msg.textContent="Searching...";out.innerHTML="";
+try{const r=await fetch(`https://www.omdbapi.com/?apikey=${key}&s=${encodeURIComponent(term)}`),d=await r.json();if(d.Response==="False")throw Error(d.Error);
+msg.textContent=`Found results for "${term}"`;d.Search.forEach(m=>{let poster=m.Poster==="N/A"?"https://via.placeholder.com/300x450?text=No+Poster":m.Poster;out.innerHTML+=`<article class="movie"><img src="${poster}" alt="${m.Title}"><div><h3>${m.Title}</h3><p>${m.Year} · ${m.Type}</p></div></article>`})
+}catch(e){msg.textContent="No results or API request failed."}}
+</script></body></html>

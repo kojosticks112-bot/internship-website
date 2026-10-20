@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Component Playground</title><style>
+body{font-family:Arial;background:#f1f5f9;margin:0}.nav{background:#111827;color:white;padding:16px}.wrap{max-width:1000px;margin:auto;padding:25px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}.card{background:white;padding:20px;border-radius:16px;box-shadow:0 5px 20px #0001}.btn{padding:10px 16px;border:0;border-radius:8px;background:#2563eb;color:white;cursor:pointer}.modal{display:none;position:fixed;inset:0;background:#0008;place-items:center}.modal-box{background:white;padding:25px;border-radius:15px;max-width:400px}.toast{position:fixed;right:20px;bottom:20px;background:#111827;color:white;padding:15px;border-radius:10px;display:none}
+</style></head><body><nav class="nav"><b>My UI Toolkit</b> &nbsp; Home &nbsp; Components</nav>
+<div class="wrap"><h1>Reusable UI Components</h1><div class="grid">
+<div class="card"><h2>Button</h2><button class="btn" onclick="toast('Button clicked!')">Click Me</button></div>
+<div class="card"><h2>Modal</h2><button class="btn" onclick="openModal()">Open Modal</button></div>
+<div class="card"><h2>Form</h2><input id="name" placeholder="Your name" style="padding:10px;width:90%"><button class="btn" onclick="toast('Form submitted')">Submit</button></div>
+<div class="card"><h2>Input</h2><input type="text" placeholder="Type here" style="padding:10px;width:90%"></div>
+<div class="card"><h2>Navbar</h2><p>Responsive navigation is shown at the top.</p></div>
+</div></div>
+<div class="modal" id="modal"><div class="modal-box"><h2>Hello!</h2><p>This is a reusable modal component.</p><button class="btn" onclick="closeModal()">Close</button></div></div><div class="toast" id="toast"></div>
+<script>function openModal(){modal.style.display="grid"}function closeModal(){modal.style.display="none"}function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",2000)}</script>
+</body></html>

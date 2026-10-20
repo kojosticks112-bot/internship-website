@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Launch Countdown</title><style>
+body{margin:0;font-family:Arial;min-height:100vh;display:grid;place-items:center;text-align:center;background:linear-gradient(135deg,#0f172a,#3730a3);color:white}.box{width:min(90%,700px);padding:35px;background:#ffffff18;border:1px solid #ffffff33;border-radius:25px;backdrop-filter:blur(10px)}.time{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.unit{background:#fff;color:#111827;padding:18px;border-radius:15px;min-width:85px}.num{font-size:36px;font-weight:bold}input{padding:13px;border-radius:9px;border:0;margin:6px}button{padding:13px 20px;border:0;border-radius:9px;cursor:pointer}
+</style></head><body><div class="box"><h1>🚀 Product Launch</h1><p>Our big event is coming soon!</p><input id="date" type="datetime-local"><button onclick="setDate()">Set Countdown</button><div class="time"><div class="unit"><div id="days" class="num">0</div>Days</div><div class="unit"><div id="hours" class="num">0</div>Hours</div><div class="unit"><div id="minutes" class="num">0</div>Minutes</div><div class="unit"><div id="seconds" class="num">0</div>Seconds</div></div><p id="done"></p><h3>Get notified</h3><input id="email" type="email" placeholder="Your email"><button onclick="notify()">Notify me</button></div>
+<script>
+let target=new Date(Date.now()+7*86400000);
+function setDate(){let v=document.getElementById("date").value;if(v)target=new Date(v);document.getElementById("done").textContent=""}
+function tick(){let diff=Math.max(0,target-new Date()),s=Math.floor(diff/1000);days.textContent=Math.floor(s/86400);hours.textContent=Math.floor(s%86400/3600);minutes.textContent=Math.floor(s%3600/60);seconds.textContent=s%60;if(diff===0)done.textContent="🎉 The launch is here!"}
+function notify(){let e=document.getElementById("email").value;document.getElementById("done").textContent=e?"Thanks! Notification signup received.":"Please enter your email."}
+setInterval(tick,1000);tick();
+</script></body></html>

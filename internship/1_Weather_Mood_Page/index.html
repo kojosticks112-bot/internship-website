@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Weather Mood Page</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;min-height:100vh;display:grid;place-items:center;transition:.4s;background:linear-gradient(135deg,#ffd166,#f4a261)}
+.card{width:min(92%,520px);padding:30px;border-radius:24px;background:#ffffffdd;box-shadow:0 15px 40px #0003;text-align:center}
+input,button{padding:13px;border:0;border-radius:10px;margin:5px;font-size:16px}input{width:65%;border:1px solid #ddd}button{background:#2563eb;color:white;cursor:pointer}
+#weather{margin-top:20px;font-size:18px}.sunny{background:linear-gradient(135deg,#ffd166,#f4a261)}.rainy{background:linear-gradient(135deg,#7b8fa1,#27374d);color:white}.cloudy{background:linear-gradient(135deg,#b8c6db,#f5f7fa)}.snow{background:linear-gradient(135deg,#dff6ff,#a9d6e5)}
+small{display:block;margin-top:12px;opacity:.7}
+</style></head>
+<body class="sunny">
+<div class="card"><h1>🌤️ Weather Mood</h1>
+<p>Enter a city to see the current weather.</p>
+<input id="city" placeholder="e.g. Accra"><button onclick="getWeather()">Search</button>
+<div id="weather">Enter your OpenWeatherMap API key in the code before using.</div>
+<small>Uses OpenWeatherMap. Replace API_KEY in the JavaScript.</small></div>
+<script>
+const API_KEY="YOUR_OPENWEATHERMAP_API_KEY";
+async function getWeather(){
+ const city=document.getElementById("city").value.trim(), box=document.getElementById("weather");
+ if(!city)return box.textContent="Please enter a city.";
+ if(API_KEY==="YOUR_OPENWEATHERMAP_API_KEY")return box.textContent="Add your OpenWeatherMap API key to API_KEY first.";
+ try{
+  const r=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`);
+  if(!r.ok)throw Error();
+  const d=await r.json(), main=d.weather[0].main.toLowerCase();
+  document.body.className=main.includes("rain")||main.includes("drizzle")||main.includes("thunder")?"rainy":main.includes("snow")?"snow":main.includes("cloud")?"cloudy":"sunny";
+  box.innerHTML=`<h2>${d.name}</h2><p>🌡️ ${Math.round(d.main.temp)}°C</p><p>☁️ ${d.weather[0].description}</p><p>💧 Humidity: ${d.main.humidity}%</p>`;
+ }catch(e){box.textContent="City not found or API request failed."}
+}
+</script></body></html>
